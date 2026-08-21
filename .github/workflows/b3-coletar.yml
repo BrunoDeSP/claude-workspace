@@ -1,0 +1,50 @@
+# Coleta diária do snapshot da B3.
+#
+# Está em execução MANUAL de propósito. O passo de commit grava os dados
+# coletados no repositório, e enquanto ele for público isso significa
+# republicar a base do Fundamentus.
+#
+# Para ligar o automático: deixe o repositório privado, descomente o bloco
+# `schedule` abaixo e remova `dados/*.json` e `dados/hist/` do .gitignore.
+
+name: Coletar B3
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 22 * * 1-5'   # 19h em São Paulo, dias úteis, após o fechamento
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: b3-screener
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: b3-screener/package-lock.json
+
+      - run: npm ci
+      - run: npm run teste
+      - run: npm run coletar
+
+      - name: Publicar snapshot como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: snapshot-b3
+          path: b3-screener/dados/atual.json
+          retention-days: 30
+
+      # Commit dos dados — só faz sentido com o repositório privado.
+      # - name: Commitar snapshot
+      #   run: |
+      #     git config user.name  "github-actions[bot]"
+      #     git config user.email "github-actions[bot]@users.noreply.github.com"
+      #     git add -f dados/atual.json dados/hist/
+      #     git diff --staged --quiet || git commit -m "dados: snapshot $(date -u +%F)"
+      #     git push

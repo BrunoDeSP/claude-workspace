@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Triagem B3</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230d1117'/%3E%3Cpath d='M3 11.5h2.5v2H3zM6.5 7h2.5v6.5H6.5zM10 3.5h2.5v10H10z' fill='%2358a6ff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<header class="topo">
+  <div class="titulo">
+    <h1>Triagem B3</h1>
+    <p class="sub">Reduz o universo. A leitura é sua.</p>
+  </div>
+  <div class="meta" id="meta"></div>
+</header>
+
+<div id="aviso-demo" class="aviso oculto">
+  Dados de <strong>exemplo</strong>, não reais. Rode <code>npm run coletar</code> para trazer o snapshot do Fundamentus.
+</div>
+
+<nav class="abas">
+  <button class="aba ativa" data-modo="garimpo">Garimpo</button>
+  <button class="aba" data-modo="consulta">Consulta</button>
+</nav>
+
+<!-- ============ GARIMPO ============ -->
+<section id="modo-garimpo">
+  <div class="controles">
+    <div class="grupo">
+      <label>Universo</label>
+      <div class="segmentado" id="universo">
+        <button data-uni="acao" class="ativa">Ações</button>
+        <button data-uni="fii">FIIs</button>
+        <button data-uni="ambos">Ambos</button>
+      </div>
+      <p class="nota oculto" id="nota-ambos">
+        Em "Ambos" só aparecem os campos que existem nos dois universos. ROE e vacância não se comparam.
+      </p>
+    </div>
+
+    <div class="grupo cresce">
+      <label>Filtros</label>
+      <div id="filtros"></div>
+      <div class="acoes-filtro">
+        <button id="add-filtro" class="btn">+ filtro</button>
+        <button class="btn fantasma" data-preset="dy10">DY ≥ 10%</button>
+        <button class="btn fantasma" data-preset="liquidez">Liquidez ≥ 1 mi</button>
+        <button class="btn fantasma" data-preset="limpar">limpar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="barra-resultado">
+    <span id="contagem"></span>
+    <div>
+      <button id="colunas-btn" class="btn fantasma">Colunas</button>
+      <button id="csv" class="btn fantasma">Baixar CSV</button>
+    </div>
+  </div>
+
+  <div id="painel-colunas" class="painel-colunas oculto"></div>
+
+  <div class="rolagem">
+    <table id="tabela"><thead></thead><tbody></tbody></table>
+  </div>
+  <p id="vazio" class="vazio oculto">Nenhum ativo passou nos filtros.</p>
+</section>
+
+<!-- ============ CONSULTA ============ -->
+<section id="modo-consulta" class="oculto">
+  <div class="controles">
+    <div class="grupo cresce">
+      <label>Tickers <span class="leve">(separados por espaço ou vírgula)</span></label>
+      <div class="linha">
+        <input id="tickers" type="text" placeholder="PETR4 BBAS3 HGLG11" autocomplete="off">
+        <button id="comparar" class="btn">Comparar</button>
+      </div>
+      <p class="nota">Compara lado a lado o que já está no snapshot. Para a ficha completa, clique no ticker.</p>
+    </div>
+  </div>
+  <div class="rolagem"><div id="comparacao"></div></div>
+</section>
+
+<!-- ============ FICHA ============ -->
+<aside id="ficha" class="ficha oculto">
+  <div class="ficha-topo">
+    <h2 id="ficha-titulo"></h2>
+    <button id="fechar-ficha" class="btn fantasma">fechar</button>
+  </div>
+  <div id="ficha-corpo"></div>
+</aside>
+<div id="fundo" class="fundo oculto"></div>
+
+<footer class="rodape">
+  Fonte: <a href="https://www.fundamentus.com.br" target="_blank" rel="noopener">Fundamentus</a> ·
+  snapshot local, 2 requisições por dia · sem recomendação de investimento
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

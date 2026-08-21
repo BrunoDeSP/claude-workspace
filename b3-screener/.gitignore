@@ -1,0 +1,8 @@
+node_modules/
+
+# Dados coletados do Fundamentus. Ficam locais de propósito:
+# o repositório é público, e commitar a base seria republicá-la.
+# Para versionar os dados, deixe o repo privado e remova estas linhas.
+dados/*.json
+dados/hist/
+dados/cache/

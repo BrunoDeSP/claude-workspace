@@ -1,0 +1,16 @@
+{
+  "name": "b3-screener",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Triagem de ativos da B3 (ações e FIIs) a partir de um snapshot diário do Fundamentus.",
+  "scripts": {
+    "coletar": "node src/coletar.js",
+    "start": "node src/servidor.js",
+    "teste": "node --test testes/*.test.js"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  }
+}
